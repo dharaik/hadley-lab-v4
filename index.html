@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Hadley / Ferrel / Polar lab v4 · nullschool-style overturning</title>
+  <meta name="description" content="Orthographic Blue Marble with dual-height Hadley, Ferrel, and Polar particles. Toggle circulation: Hadley | Ferrel | Polar | All. Zonal-mean toys (Marshall &amp; Plumb spirit) with a guided tour." />
+  <meta name="theme-color" content="#05070c" />
+  <meta name="color-scheme" content="dark" />
+  <meta property="og:title" content="Hadley / Ferrel / Polar lab v4 · nullschool-style overturning" />
+  <meta property="og:description" content="Dual-height zonal-mean Hadley + Ferrel + Polar particle wind field — three-cell stack on one globe." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Hadley / Ferrel / Polar lab v4 · nullschool-style overturning" />
+  <meta name="twitter:description" content="Dual-height zonal-mean Hadley, Ferrel, and Polar overturning on an orthographic Blue Marble." />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="apple-touch-icon" href="./favicon.svg" />
+  <script type="module" crossorigin src="./assets/index-Bk4xus4H.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DfbJ6qd_.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <h1>Hadley lab v4</h1>
+        <span class="tag">+ Ferrel + Polar · nullschool-style · zonal-mean · guided tour</span>
+      </div>
+      <p class="lede">
+        Dual-height particles on an orthographic Blue Marble. Toggle circulation:
+        Hadley (lower equatorward / upper poleward) · Ferrel (lower poleward / upper equatorward) ·
+        Polar (lower equatorward / upper poleward, weak) · All.
+        Season shifts the ITCZ and the three-cell stack together.
+      </p>
+    </header>
+
+    <main class="stage">
+      <div id="view3d" class="view3d" aria-label="Orthographic Earth with Hadley / Ferrel / Polar particle wind field"></div>
+      <canvas id="inset" class="inset" width="280" height="160" aria-label="Lat–height streamfunction schematic"></canvas>
+      <div class="hud">
+        <div class="metrics" id="metrics"></div>
+        <p class="status" id="status"></p>
+      </div>
+      <nav class="stage-rail" id="stageRail" aria-label="Guided tour stages">
+        <button class="rail-nav" id="stagePrev" type="button" aria-label="Previous stage">‹</button>
+        <ol class="rail-steps" id="railSteps"></ol>
+        <button class="rail-nav" id="stageNext" type="button" aria-label="Next stage">›</button>
+      </nav>
+    </main>
+
+    <aside class="panel">
+      <section class="block" id="stageCardWrap">
+        <h2>Stage <span id="stageNum">1 / 6</span></h2>
+        <div class="stage-card" id="stageCard">
+          <div class="stage-title" id="stageTitle">—</div>
+          <p class="stage-story" id="stageStory">—</p>
+          <div class="stage-metrics" id="stageMetrics"></div>
+          <div class="stage-cite" id="stageCite"></div>
+          <div class="stage-does" id="stageDoes"></div>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Knobs</h2>
+        <label class="row">ΔT <span id="dTOut">40</span> K
+          <input id="dT" type="range" min="10" max="60" step="1" value="40" />
+        </label>
+        <label class="row">Ω / Ω<sub>E</sub> <span id="omegaOut">1.00</span>
+          <input id="omega" type="range" min="0.2" max="2" step="0.05" value="1" />
+        </label>
+        <label class="row">Drag <span id="dragOut">1.00</span>
+          <input id="drag" type="range" min="0.2" max="2" step="0.05" value="1" />
+        </label>
+        <div class="seg-label">Circulation</div>
+        <div class="seg seg-cells" role="group" aria-label="Circulation cell">
+          <button type="button" data-cell="hadley" class="on">Hadley</button>
+          <button type="button" data-cell="ferrel">Ferrel</button>
+          <button type="button" data-cell="polar">Polar</button>
+          <button type="button" data-cell="all">All</button>
+        </div>
+        <div class="seg-label">Season</div>
+        <div class="seg" role="group" aria-label="Season">
+          <button type="button" data-season="annual" class="on">Annual</button>
+          <button type="button" data-season="DJF">DJF</button>
+          <button type="button" data-season="JJA">JJA</button>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Overlays</h2>
+        <label class="chk"><input id="ovItcz" type="checkbox" checked /> ITCZ / thermal equator band</label>
+        <label class="chk"><input id="ovJet" type="checkbox" checked /> Subtropical jet belt</label>
+        <label class="chk"><input id="ovEddy" type="checkbox" checked /> Eddy wall ~40–45°</label>
+        <label class="chk"><input id="ovInset" type="checkbox" checked /> Lat–height ψ inset</label>
+        <label class="chk"><input id="ovEq82" type="checkbox" checked /> Eq. 8.2 teaching (14/58/130)</label>
+      </section>
+
+      <section class="block anchors">
+        <h2>Anchors</h2>
+        <ul id="anchorsHadley">
+          <li>~6 PW transport need</li>
+          <li>Cell edge ~±30° class</li>
+          <li>Jet ~30 m/s @ ~200 hPa / ~30°</li>
+          <li>Conserving u: 14 / 58 / 130 m/s</li>
+          <li>Eddy wall ~40–45°</li>
+        </ul>
+        <ul id="anchorsFerrel" hidden>
+          <li>Surface poleward / aloft equatorward</li>
+          <li>Shared sink ~30° with Hadley</li>
+          <li>Jet ~30 m/s @ ~30° / 200 hPa</li>
+          <li>Band ~φ_H→φ_F (~30–60°)</li>
+          <li>Eddy-driven in reality (toy ψ here)</li>
+          <li>Eddy wall ~40–45° ≠ Ferrel end</li>
+        </ul>
+        <ul id="anchorsPolar" hidden>
+          <li>Band ~60–90° (φ_F → pole)</li>
+          <li>Surface equatorward / aloft poleward</li>
+          <li>Shared ascent ~60° with Ferrel</li>
+          <li>Descent over polar cap</li>
+          <li>Weak vs Hadley (~0.3–0.5× ψ)</li>
+          <li>Zonal-mean toy — not polar vortex</li>
+        </ul>
+      </section>
+
+      <section class="block howto">
+        <h2>How</h2>
+        <p id="howLine">
+          Particles follow the zonal-mean Hadley overturning (lower return + upper outflow), not a surface-wind skin; longitude repeats are cell copies, not Walker/monsoon.
+        </p>
+        <p class="hint">Drag to orbit · scroll to zoom · continents are scenery · tour rail steps the story.</p>
+      </section>
+    </aside>
+  </div>
+</body>
+</html>
